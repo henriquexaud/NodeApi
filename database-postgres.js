@@ -1,29 +1,34 @@
 import { randomUUID } from "crypto"
 import { sql } from "./db.js"
 
-export class DatabaseMemory {
+export class DatabasePostgres {
     async list(search) {
-        let videos
+        let usuarios
 
         if (search) {
-            videos = await sql`select * from videos where title ilike "%${search}%`
+            usuarios = await sql`select * from usuarios where nome ilike ${"%" + search + "%"}` 
         } else {
-            videos = await sql`select * from videos`
+            usuarios = await sql`select * from usuarios`
         }
 
-        return videos
+        return usuarios
     }
 
-    async create(video) {
-        const videoId = randomUUID()
-        
+    async create(usuario) {
+        const usuarioId = randomUUID()
+        const { nome, email, senha } = usuario
+
+        await sql`insert into usuarios (id, nome, email, senha) 
+        VALUES (${usuarioId}, ${nome}, ${email}, ${senha})`
     }
 
-    update(id, video) {
+    async update(id, usuario) {
+        const { nome, email, senha } = usuario
 
+        await sql`update usuarios set nome = ${nome}, email = ${email}, senha = ${senha} where id = ${id}`
     }
 
-    delete(id) {
-
+    async delete(id) {
+        await sql`delete from usuarios where id = ${id}`
     }
 }
