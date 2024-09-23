@@ -1,19 +1,23 @@
-POST http://localhost:3333/usuarios
+POST http://nodeapi-zyiv.onrender.com/usuarios
 Content-type: application/json
 
 {
-    "nome": "José Souza",
-    "email": "jose.souza@example.com",
-    "senha": "321senha"
+    "nome": "João Souza",
+    "email": "joao.souza@example.com",
+    "senha": "sen123ha"
 }
 
 ###
 
-GET http://localhost:3333/usuarios
+GET http://nodeapi-zyiv.onrender.com/usuarios
 
 ###
 
-PUT http://localhost:3333/usuarios/5c55c134-a1dc-46ee-9ed5-53b60b930196
+GET http://nodeapi-zyiv.onrender.com/usuarios?search=souza
+
+###
+
+PUT http://nodeapi-zyiv.onrender.com/usuarios/5c55c134-a1dc-46ee-9ed5-53b60b930196
 Content-type: application/json
 
 {
@@ -24,4 +28,4 @@ Content-type: application/json
 
 ###
 
-DELETE http://localhost:3333/usuarios/5c55c134-a1dc-46ee-9ed5-53b60b930196
+DELETE http://nodeapi-zyiv.onrender.com/usuarios/5c55c134-a1dc-46ee-9ed5-53b60b930196

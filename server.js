@@ -1,9 +1,15 @@
 import { fastify } from "fastify"
 import { DatabasePostgres } from "./database-postgres.js"
+import fastifyCors from '@fastify/cors' // Adicione isso
 
 const server = fastify()
 
 const database = new DatabasePostgres()
+
+// Configurar CORS
+server.register(fastifyCors, { 
+  origin: '*' // Permite qualquer origem, você pode especificar domínios se necessário
+})
 
 server.post("/usuarios", async (request, response) => {
     const { nome, email, senha } = request.body
@@ -47,6 +53,6 @@ server.delete("/usuarios/:id", async (request, response) => {
 })
 
 server.listen({
-    host:"0.0.0.0",
+    host: "0.0.0.0",
     port: process.env.PORT ?? 3333,
 })
