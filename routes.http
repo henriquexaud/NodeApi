@@ -2,9 +2,9 @@ POST http://localhost:3333/usuarios
 Content-type: application/json
 
 {
-    "nome": "José Souza",
-    "email": "jose.souza@example.com",
-    "senha": "321senha"
+    "nome": "Augusto Campos",
+    "email": "augusto.campos@example.com",
+    "senha": "etanos"
 }
 
 ###
