@@ -1,34 +1,50 @@
-import { randomUUID } from "crypto"
-import { sql } from "./db.js"
+import { randomUUID } from "crypto";
+import { sql } from "./db.js";
 
 export class DatabasePostgres {
     async list(search) {
-        let usuarios
-
+        let usuarios;
+    
         if (search) {
-            usuarios = await sql`select * from usuarios where nome ilike ${"%" + search + "%"}` 
+            usuarios = await sql`
+                SELECT * FROM usuarios 
+                WHERE nome ILIKE ${"%" + search + "%"} 
+                ORDER BY nome ASC
+            `;
         } else {
-            usuarios = await sql`select * from usuarios`
+            usuarios = await sql`
+                SELECT * FROM usuarios 
+                ORDER BY nome ASC
+            `;
         }
-
-        return usuarios
+    
+        return usuarios;
     }
-
+    
     async create(usuario) {
-        const usuarioId = randomUUID()
-        const { nome, email, senha } = usuario
+        const usuarioId = randomUUID();
+        const { nome, email, senha } = usuario;
 
-        await sql`insert into usuarios (id, nome, email, senha) 
-        VALUES (${usuarioId}, ${nome}, ${email}, ${senha})`
+        await sql`
+            INSERT INTO usuarios (id, nome, email, senha) 
+            VALUES (${usuarioId}, ${nome}, ${email}, ${senha})
+        `;
     }
 
     async update(id, usuario) {
-        const { nome, email, senha } = usuario
+        const { nome, email, senha } = usuario;
 
-        await sql`update usuarios set nome = ${nome}, email = ${email}, senha = ${senha} where id = ${id}`
+        await sql`
+            UPDATE usuarios 
+            SET nome = ${nome}, email = ${email}, senha = ${senha} 
+            WHERE id = ${id}
+        `;
     }
 
     async delete(id) {
-        await sql`delete from usuarios where id = ${id}`
+        await sql`
+            DELETE FROM usuarios 
+            WHERE id = ${id}
+        `;
     }
 }
